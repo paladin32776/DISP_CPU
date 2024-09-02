@@ -9,8 +9,11 @@
 #define CTRL_BIT_RC 4
 #define CTRL_BIT_G2 5
 
-#define MEM_COLS 16
-#define MEM_ROWS 10
+#define CONTROL_MEM_COLS 16
+#define CONTROL_MEM_ROWS 10
+
+#define PROGRAM_MEM_COLS 4
+#define PROGRAM_MEM_ROWS 16
 
 #define BIT_AREA_XMIN 0
 #define BIT_AREA_XMAX 240
@@ -47,8 +50,8 @@ class DISP_CONTROL
 {
 	private:
 		TFT_eSPI *tft;
-		TFT_eSPI_Button *membits[MEM_COLS][MEM_ROWS];
-		unsigned int mem[MEM_COLS] = {0b1};
+		TFT_eSPI_Button *membits[CONTROL_MEM_COLS][CONTROL_MEM_ROWS];
+		unsigned int mem[CONTROL_MEM_COLS] = {0b1};
 		// Touch screen calibration data:
 		uint16_t calData[5] = {203, 3657, 350, 3491, 4};
 		unsigned int bg[16] = {	TFT_RED, TFT_RED, 
@@ -73,3 +76,33 @@ class DISP_CONTROL
 		// 	unsigned char ccount, unsigned char cset, unsigned char creset,
 		// 	unsigned char pcount, unsigned char pset);
 };
+
+class DISP_PROGRAM
+{
+	private:
+		TFT_eSPI *tft;
+		TFT_eSPI_Button *membits[PROGRAM_MEM_COLS][PROGRAM_MEM_ROWS];
+		// Touch screen calibration data:
+		uint16_t calData[5] = {203, 3657, 350, 3491, 4};
+		unsigned int bg[16] = {	TFT_RED, TFT_RED, 
+							   	TFT_DARKYELLOW, TFT_DARKYELLOW, TFT_DARKYELLOW, 
+							   	TFT_DARKGREEN, TFT_DARKGREEN, TFT_DARKGREEN, TFT_DARKGREEN, TFT_DARKGREEN, 
+							   	TFT_BLUE, TFT_BLUE, TFT_BLUE, TFT_BLUE, TFT_BLUE, 
+							   	TFT_PURPLE};
+
+		String smem[PROGRAM_MEM_ROWS] = {"LDA","4","ADD","7","SUB","2","JMP","10","ADD","3","SUB","5","HLT"};
+		unsigned char mem[PROGRAM_MEM_ROWS] = {1,4,4,7,9,2,14,10,4,3,9,5,0};
+		unsigned int active_row = 0;
+		void show_row(unsigned int row);
+		void show_mem();
+	public:
+		DISP_PROGRAM();
+		void check();
+		void setrow(unsigned int row);
+		unsigned int get_data(unsigned int row);
+};
+
+
+
+
+
