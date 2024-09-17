@@ -74,13 +74,12 @@ class DISP_PROGRAM
 		TFT_eSPI_Button *membits[PROGRAM_MEM_COLS][PROGRAM_MEM_ROWS];
 		// Touch screen calibration data:
 		uint16_t calData[5] = {203, 3657, 350, 3491, 4};
-		unsigned int bg[16] = {	TFT_RED, TFT_RED,
-							   	TFT_DARKYELLOW, TFT_DARKYELLOW, TFT_DARKYELLOW,
-							   	TFT_DARKGREEN, TFT_DARKGREEN, TFT_DARKGREEN, TFT_DARKGREEN, TFT_DARKGREEN,
-							   	TFT_BLUE, TFT_BLUE, TFT_BLUE, TFT_BLUE, TFT_BLUE,
-							   	TFT_PURPLE};
+		unsigned int bg[16] = {	TFT_RED, TFT_DARKGREEN, TFT_RED, TFT_DARKGREEN,
+							   						TFT_RED, TFT_DARKGREEN, TFT_RED, TFT_DARKGREEN,
+														TFT_RED, TFT_DARKGREEN, TFT_RED, TFT_DARKGREEN,
+														TFT_RED, TFT_DARKGREEN, TFT_RED, TFT_DARKGREEN };
 
-		String smem[PROGRAM_MEM_ROWS] = {"LDA","4","ADD","7","SUB","2","JMP","10","ADD","3","SUB","5","HLT"};
+		String smem[PROGRAM_MEM_ROWS] = {"LDA(1)","4","ADD(4)","7","SUB(9)","2","JMP(14)","10","ADD(4)","3","SUB(9)","5","HLT(0)"};
 		unsigned char mem[PROGRAM_MEM_ROWS] = {1,4,4,7,9,2,14,10,4,3,9,5,0};
 		unsigned int active_row = 0;
 		void show_row(unsigned int row);

@@ -164,11 +164,12 @@ void DISP_PROGRAM::show_row(unsigned int row)
       bgcolor = bg[row];
     }
     tft->fillRect(BIT_AREA_XMIN, BIT_AREA_YMIN+row*BIT_AREA_DY,
-                  BIT_AREA_DX, BIT_AREA_YMAX-BIT_AREA_YMIN,
+                  BIT_AREA_XMAX-BIT_AREA_XMIN, BIT_AREA_DY,
                   bgcolor);
     for (int col=0; col<PROGRAM_MEM_COLS; col++)
-      tft->drawNumber(bitRead(mem[row],col),
+      tft->drawNumber(bitRead(mem[row],PROGRAM_MEM_COLS-col-1),
                       BIT_TEXT_XMIN+col*BIT_AREA_DX, BIT_TEXT_YMIN+row*BIT_AREA_DY);
+    tft->drawString(smem[row], BIT_TEXT_XMIN+PROGRAM_MEM_COLS*BIT_AREA_DX, BIT_TEXT_YMIN+row*BIT_AREA_DY);
 }
 
 void DISP_PROGRAM::show_mem()
