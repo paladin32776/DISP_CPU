@@ -176,7 +176,7 @@ void DISP_PROGRAM::show_mem()
 
   tft->fillRect(BIT_AREA_XMIN, BIT_AREA_YMIN, BIT_AREA_XMAX-BIT_AREA_XMIN,
          BIT_AREA_YMAX-BIT_AREA_YMIN, TFT_BLACK); // Draw keypad background
-  for (int row=0; row<CONTROL_MEM_ROWS; row++)
+  for (int row=0; row<PROGRAM_MEM_ROWS; row++)
     show_row(row);
 }
 
@@ -203,35 +203,3 @@ void DISP_PROGRAM::setrow(unsigned int row)
   show_row(old_row);
   show_row(active_row);
 }
-
-// unsigned int DISP_CONTROL::get_ctrl(unsigned int col)
-// {
-//   return ((mem[col] & 0b0011111100) >> 2);
-// }
-
-// unsigned int DISP_CONTROL::get_cset(unsigned int col)
-// {
-//   return ((mem[col] & 0b0000000010) >> 1);
-// }
-
-// unsigned int DISP_CONTROL::get_creset(unsigned int col)
-// {
-//   return ((mem[col] & 0b0000000001));
-// }
-
-// unsigned int DISP_CONTROL::get_pcount(unsigned int col)
-// {
-//   return ((mem[col] & 0b1000000000) >> 9);
-// }
-
-// unsigned int DISP_CONTROL::get_pset(unsigned int col)
-// {
-//   return ((mem[col] & 0b0100000000) >> 8);
-// }
-
-// void DISP_CONTROL::toggleBit(unsigned int col, unsigned int row)
-// {
-//   // bitWrite(mem[col], row, !bitRead(mem[col], row));
-//   // show_mem();
-//   setcol(col);
-// }

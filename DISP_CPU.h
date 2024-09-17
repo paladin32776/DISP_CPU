@@ -26,6 +26,9 @@
 
 #define TFT_DARKYELLOW 0x9CC0
 
+#define PROGRAM_MEM_COLS 4
+#define PROGRAM_MEM_ROWS 16
+
 
 class DISP_CONTROL
 {
