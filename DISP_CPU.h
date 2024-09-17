@@ -18,13 +18,13 @@
 #define BIT_AREA_YMAX 320
 #define BIT_AREA_DX 24
 #define BIT_AREA_DY 20
-#define BIT_TEXT_XMIN 2
-#define BIT_TEXT_YMIN 5
+#define BIT_TEXT_XMIN 5
+#define BIT_TEXT_YMIN 1
 
 #define BIT_TEXT_SIZE 1   // Font size multiplier
 #define BIT_FONT &FreeSansBold9pt7b    // Key label font 2
 
-#define TFT_DARKYELLOW 0x9CC0
+#define TFT_DARKYELLOW 0x6300
 
 #define PROGRAM_MEM_COLS 4
 #define PROGRAM_MEM_ROWS 16
@@ -36,10 +36,10 @@ class DISP_CONTROL
 		TFT_eSPI *tft;
 		TFT_eSPI_Button *membits[MEM_ROWS][MEM_COLS];
 		uint16_t mem[MEM_ROWS] = {0b0000000100, 0b1010000010, 0b1000000000,
-															0b0000001010, 0b1101000010, 0b1001100000,
-														  0b0001010000, 0b0011010000, 0b0001011010,
-														  0b1100000010, 0b1000100000, 0b0000010000,
-														  0b0010010000, 0b0000011010, 0b0100000010,
+															0b0000001010, 0b1100000010, 0b1000100000,
+														  0b0000010000, 0b0010010000, 0b0000011010,
+														  0b1101000010, 0b1001100000, 0b0001010000,
+														  0b0011010000, 0b0001011010, 0b0100000010,
 														  0b0000001001};
 		// Touch screen calibration data:
 		uint16_t calData[5] = {203, 3657, 350, 3491, 4};
