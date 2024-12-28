@@ -204,3 +204,8 @@ void DISP_PROGRAM::setrow(unsigned int row)
   show_row(old_row);
   show_row(active_row);
 }
+
+unsigned int DISP_PROGRAM::get_data(unsigned int row)
+{
+  return mem[row];
+}
