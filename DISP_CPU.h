@@ -89,11 +89,15 @@ class DISP_PROGRAM
 														TFT_RED, TFT_DARKGREEN, TFT_RED, TFT_DARKGREEN,
 														TFT_RED, TFT_DARKGREEN, TFT_RED, TFT_DARKGREEN };
 
-		String smem[PROGRAM_MEM_ROWS] = {"LDA(1)","4","ADD(4)","7","SUB(9)","2","JMP(14)","10","ADD(4)","3","SUB(9)","5","HLT(0)"};
+		String opnames[5] = {"LDA","ADD","SUB","JMP","HLT"};
+		unsigned char opcodes[5] = {1,4,9,14,0};
+		// String smem[PROGRAM_MEM_ROWS] = {"LDA(1)","4","ADD(4)","7","SUB(9)","2","JMP(14)","10","ADD(4)","3","SUB(9)","5","HLT(0)"};
 		unsigned char mem[PROGRAM_MEM_ROWS] = {1,4,4,7,9,2,14,10,4,3,9,5,0};
 		unsigned int active_row = 0;
 		void show_row(unsigned int row);
 		void show_mem();
+		int next_opcode_index(unsigned char opcode);
+		int find_opcode_index(unsigned char opcode);
 	public:
 		DISP_PROGRAM();
 		void check();

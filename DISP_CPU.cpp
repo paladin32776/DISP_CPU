@@ -154,22 +154,27 @@ void DISP_PROGRAM::show_row(unsigned int row)
   tft->setFreeFont(BIT_FONT);
   tft->setTextSize(1);
   if (row==active_row)
-    {
-      tft->setTextColor(TFT_BLACK);
-      bgcolor = TFT_WHITE;
-    }
-    else
-    {
-      tft->setTextColor(TFT_WHITE);
-      bgcolor = bg[row];
-    }
-    tft->fillRect(BIT_AREA_XMIN, BIT_AREA_YMIN+row*BIT_AREA_DY,
-                  BIT_AREA_XMAX-BIT_AREA_XMIN, BIT_AREA_DY,
-                  bgcolor);
-    for (int col=0; col<PROGRAM_MEM_COLS; col++)
-      tft->drawNumber(bitRead(mem[row],PROGRAM_MEM_COLS-col-1),
-                      BIT_TEXT_XMIN+col*BIT_AREA_DX, BIT_TEXT_YMIN+row*BIT_AREA_DY);
-    tft->drawString(smem[row], BIT_TEXT_XMIN+PROGRAM_MEM_COLS*BIT_AREA_DX, BIT_TEXT_YMIN+row*BIT_AREA_DY);
+  {
+    tft->setTextColor(TFT_BLACK);
+    bgcolor = TFT_WHITE;
+  }
+  else
+  {
+    tft->setTextColor(TFT_WHITE);
+    bgcolor = bg[row];
+  }
+  tft->fillRect(BIT_AREA_XMIN, BIT_AREA_YMIN+row*BIT_AREA_DY,
+                BIT_AREA_XMAX-BIT_AREA_XMIN, BIT_AREA_DY,
+                bgcolor);
+  for (int col=0; col<PROGRAM_MEM_COLS; col++)
+    tft->drawNumber(bitRead(mem[row],PROGRAM_MEM_COLS-col-1),
+                    BIT_TEXT_XMIN+col*BIT_AREA_DX, BIT_TEXT_YMIN+row*BIT_AREA_DY);
+  String str;
+  if (row%2==0) // Show opname and opcode in parenthesis, like so: ADD(4)
+    str = opnames[find_opcode_index(mem[row])] + "(" + String(mem[row]) + ")";
+  else
+    str = String(mem[row]);
+  tft->drawString(str , BIT_TEXT_XMIN+PROGRAM_MEM_COLS*BIT_AREA_DX, BIT_TEXT_YMIN+row*BIT_AREA_DY);
 }
 
 void DISP_PROGRAM::show_mem()
@@ -181,11 +186,30 @@ void DISP_PROGRAM::show_mem()
     show_row(row);
 }
 
+int DISP_PROGRAM::next_opcode_index(unsigned char opcode)
+{
+  int opcode_index = find_opcode_index(opcode);
+  if (opcode_index >= 0)
+    return (opcode_index+1)%5; 
+  else
+    return -1;
+}
+
+int DISP_PROGRAM::find_opcode_index(unsigned char opcode)
+{
+  for (int n=0; n<5; n++)
+    if (opcode==opcodes[n])
+      return n;
+  return -1;
+}
+
 void DISP_PROGRAM::check()
 {
   uint16_t tx = 0, ty = 0; // To store the touch coordinates
   // Get current touch state and coordinates
   bool pressed = tft->getTouch(&tx, &ty);
+
+  delay(100);
 
   if (pressed)
   {
@@ -193,6 +217,19 @@ void DISP_PROGRAM::check()
     unsigned int row = int((ty - BIT_TEXT_YMIN) / BIT_AREA_DY);
     // toggleBit(col, row);
     Serial.printf("row = %d   col = %d\n", row, col);
+    if (row%2==0)
+    {
+      unsigned int opcode = opcodes[next_opcode_index(mem[row])];
+      mem[row] = opcode;
+      show_row(row);
+    }
+    else
+    {
+      unsigned int data = mem[row];
+      data = (data+1)%16;
+      mem[row] = data;
+      show_row(row);
+    }
   }
 
 }
